@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAV4 vs Model Y — Cost of Ownership</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#11131a; --panel:#1a1d26; --panel-border:#2a2e3a;
+    --ink:#eee9e1; --ink-dim:#8d93a1; --ink-faint:#5d6373;
+    --rav4:#c9785e; --rav4-dim:#5d4036;
+    --modely:#7fa9ba; --modely-dim:#3c5663;
+    --fuel:#d9893d; --fuel-dim:#62452d; --fuel-home:#bf6f2f; --fuel-sc:#efb56f;
+    --dep:#8a90cf; --sun:#d9ba58; --invest:#5b9e8a; --upfront:#718296; --maint:#74976e;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.45;}
+  .page{max-width:1180px;margin:0 auto;padding:48px 24px 80px;}
+
+  .hero{margin-bottom:40px;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 10px;}
+  .hero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(34px,5vw,52px);margin:0 0 12px;letter-spacing:-0.01em;}
+  .hero h1 .gas-word{color:var(--rav4);}
+  .hero h1 .ev-word{color:var(--modely);}
+  .hero h1 .vs{color:var(--ink-faint);font-weight:500;font-style:italic;font-size:0.55em;padding:0 6px;vertical-align:middle;}
+  .hero .sub{color:var(--ink-dim);font-size:15px;max-width:600px;margin:0;}
+
+  .panels{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;}
+  @media (max-width:980px){.panels{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.panels{grid-template-columns:1fr;}}
+  .panel{background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--radius);padding:20px 18px 22px;}
+  .panel h2{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:0 0 16px;display:flex;align-items:center;gap:8px;}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0;}
+  .dot-gas{background:var(--rav4);} .dot-ev{background:var(--modely);} .dot-sun{background:var(--sun);} .dot-neutral{background:var(--ink-faint);}
+
+  .field{margin-bottom:18px;} .field:last-child{margin-bottom:0;}
+  .field-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;gap:8px;}
+  .field-head span.label{font-size:13px;color:var(--ink-dim);}
+  .field-val{display:flex;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);flex-shrink:0;}
+  .field-val .affix{color:var(--ink-faint);}
+  .field-val input[type=number]{width:64px;background:transparent;border:none;color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;-moz-appearance:textfield;}
+  .field-val input[type=number]::-webkit-outer-spin-button,.field-val input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .field-val input[type=number]:focus-visible{outline:2px solid var(--ink-faint);outline-offset:2px;border-radius:4px;}
+
+  input[type=range]{width:100%;height:4px;border-radius:2px;background:var(--panel-border);appearance:none;-webkit-appearance:none;cursor:pointer;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--ink);border:3px solid var(--bg);margin-top:-6px;}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--ink);border:3px solid var(--bg);}
+  input[type=range]:focus-visible{outline:2px solid var(--ink-faint);outline-offset:4px;}
+  .panel-rav4 input[type=range]{accent-color:var(--rav4);}
+  .panel-modely input[type=range]{accent-color:var(--modely);}
+  .panel-solar input[type=range]{accent-color:var(--sun);}
+  .panel-shared input[type=range]{accent-color:var(--ink-faint);}
+
+  .switch-field{display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;position:relative;margin-top:4px;}
+  .switch-field .sw-label{font-size:13px;color:var(--ink-dim);}
+  .switch-field input{position:absolute;opacity:0;width:0;height:0;}
+  .switch-ui{width:38px;height:22px;border-radius:11px;background:var(--panel-border);position:relative;transition:background .15s;flex-shrink:0;}
+  .switch-ui::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--ink);transition:transform .15s;}
+  .switch-field input:checked + .switch-ui{background:var(--upfront);}
+  .switch-field input:checked + .switch-ui::after{transform:translateX(16px);}
+  .switch-field input:focus-visible + .switch-ui{outline:2px solid var(--ink-faint);outline-offset:2px;}
+
+  .reset-row{display:flex;justify-content:flex-end;margin:8px 0 28px;}
+  .reset-btn{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);background:transparent;border:1px solid var(--panel-border);border-radius:8px;padding:8px 14px;cursor:pointer;transition:border-color .15s,color .15s;}
+  .reset-btn:hover{border-color:var(--ink-faint);color:var(--ink);}
+  .reset-btn:focus-visible{outline:2px solid var(--ink-faint);outline-offset:2px;}
+
+  .results{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+  @media (max-width:780px){.results{grid-template-columns:1fr;}}
+  .ledger{background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--radius);padding:24px 24px 26px;}
+  .ledger-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
+  .ledger-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;display:flex;align-items:center;gap:8px;}
+  .ledger-total{text-align:right;}
+  .ledger-total .big{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:600;display:block;line-height:1.1;}
+  .ledger-total .peryr{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);}
+
+  .bar-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px;}
+  .bar-track{height:26px;border-radius:7px;background:#0d0f14;overflow:hidden;display:flex;margin-bottom:6px;}
+  .bar-seg{height:100%;transition:width .25s ease;}
+  @media (prefers-reduced-motion:reduce){.bar-seg{transition:none;}}
+  .seg-upfront{background:var(--upfront);} .seg-dep{background:var(--dep);}
+  .seg-gas{background:var(--fuel);}
+  .seg-home{background:var(--fuel-home);} .seg-sc{background:var(--fuel-sc);} .seg-maint{background:var(--maint);}
+
+  .credit-track{height:10px;border-radius:5px;background:#0d0f14;overflow:hidden;display:flex;margin-bottom:4px;}
+  .credit-seg{height:100%;background:repeating-linear-gradient(-45deg,var(--sun),var(--sun) 5px,#b8963f 5px,#b8963f 10px);transition:width .25s ease;}
+  .invest-seg{height:100%;background:repeating-linear-gradient(45deg,var(--invest),var(--invest) 5px,#4a8878 5px,#4a8878 10px);transition:width .25s ease;}
+  @media (prefers-reduced-motion:reduce){.credit-seg,.invest-seg{transition:none;}}
+  .credit-caption{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-faint);margin:0 0 18px;display:flex;justify-content:space-between;gap:8px;}
+  .credit-caption .cc-solar{color:var(--sun);}
+  .credit-caption .cc-invest{color:var(--invest);}
+
+  .legend{display:flex;flex-direction:column;gap:11px;}
+  .legend-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .legend-row .lk{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ink);}
+  .legend-row .lk .dot{margin-top:5px;}
+  .legend-row .lk-text{display:flex;flex-direction:column;}
+  .legend-row .lk-text small{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-faint);margin-top:1px;}
+  .legend-row .lv{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);white-space:nowrap;flex-shrink:0;}
+  .legend-row .lv.credit{color:var(--sun);} .legend-row .lv.invest{color:var(--invest);} .legend-row .lv.zero{color:var(--fuel-home);}
+  .legend-divider{height:1px;background:var(--panel-border);margin:3px 0;}
+  .legend-row.net .lk{font-weight:600;color:var(--ink);} .legend-row.net .lv{font-weight:600;}
+
+  .verdict{border-radius:var(--radius);padding:26px 28px;border:1px solid var(--panel-border);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;transition:border-color .2s;margin-bottom:36px;}
+  .verdict .vtext{font-size:15px;color:var(--ink-dim);max-width:560px;}
+  .verdict .vtext b{color:var(--ink);font-weight:600;}
+  .verdict .vnum{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:600;white-space:nowrap;}
+
+  .section-label{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 16px;}
+  .chart-card{background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--radius);padding:22px 22px 18px;margin-bottom:16px;}
+  .chart-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .chart-holder svg{width:100%;height:auto;display:block;}
+  .charts-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:780px){.charts-pair{grid-template-columns:1fr;}}
+  .chart-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;padding-top:4px;}
+  .chart-legend .cl-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;}
+  .chart-legend .cl-line{width:18px;height:3px;border-radius:2px;display:inline-block;}
+
+  footer{margin-top:30px;font-size:12px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;line-height:1.7;}
+
+  .model-info{background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--radius);margin-bottom:28px;overflow:hidden;}
+  .model-info summary{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);padding:14px 20px;cursor:pointer;user-select:none;list-style:none;display:flex;justify-content:space-between;align-items:center;}
+  .model-info summary::-webkit-details-marker{display:none;}
+  .model-info summary::after{content:'↓';transition:transform .2s;}
+  .model-info[open] summary::after{transform:rotate(180deg);}
+  .model-info summary:hover{color:var(--ink);}
+  .model-info-body{padding:0 20px 18px;font-size:13px;color:var(--ink-dim);line-height:1.65;border-top:1px solid var(--panel-border);}
+  .model-info-body p{margin:12px 0 0;}
+  .model-info-body p:first-child{margin-top:14px;}
+  .model-info-body strong{color:var(--ink);font-weight:600;}
+
+  .tip{position:relative;cursor:help;border-bottom:1px dotted var(--ink-faint);}
+  .tip::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#22252f;border:1px solid var(--panel-border);border-radius:8px;padding:8px 10px;font-size:11.5px;font-family:'Inter',sans-serif;color:var(--ink-dim);white-space:normal;width:210px;line-height:1.5;z-index:200;pointer-events:none;opacity:0;transition:opacity .12s;}
+  .tip:hover::after{opacity:1;}
+  .tip::before{content:'';position:absolute;bottom:calc(100% + 2px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--panel-border);opacity:0;transition:opacity .12s;pointer-events:none;}
+  .tip:hover::before{opacity:1;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <p class="eyebrow" id="heroEyebrow">Total Cost of Ownership · Live Dashboard</p>
+    <h1><span class="gas-word">RAV4</span><span class="vs">vs</span><span class="ev-word">Model Y</span></h1>
+    <p class="sub">Gas is espensive. should I get an EV?</p>
+  </div>
+
+  <details class="model-info">
+    <summary>About this model</summary>
+    <div class="model-info-body">
+        <p>This tool compares the <strong>total net cost of ownership</strong> for a used RAV4 (gas) vs. a used Model Y (EV).</p>
+        <p>I currently own the RAV4 (2013), and the earliest/cheapest model Y is 2020/2021.</p>
+      <p><strong>Up-front costs</strong> include taxes and registration, estimated at 10% the purchase price of the vehicle. </p>
+      <p><strong>Depreciation</strong> uses an exponential declining-balance model: the car loses a fixed percentage of its <em>current</em> value each year (not straight line depreciation). This means depreciation costs are front-loaded and slow down over time.</p>
+      <p><strong>Cost of capital (Invest the difference)</strong> assumes you take the difference in the purchase price of the two vehicles, and invest the difference if purchasing the cheaper option. This creates a fair apples-to-apples comparison by estimating the cost of capital (or, in a positive sense, the return on investment of the capital difference)</p>
+      <p><strong>Maintenance</strong> costs are typically lower for EVs (no oil changes, less frequent brake replacement due to regenerative braking, etc), and modeled here as a cost per mile driven, using estimated values from an internet search (10c/mi ICE, 6c/mi EV)</p>
+      <p><strong>Fuel</strong> obviously the biggest differentiator between gas and electric. EV charging must be sub-categorized into supercharging (away from home, most expensive), home charging (base utility rate), and home solar generation (nearly free, see below). Select the percentage of charging done at home (grid and home solar), with the remainder covered by supercharging.</p>
+      <p><strong>Home solar</strong> adds nuance: under Net Energy Metering 2.0 (NEM), surplus energy exported to the grid over a 12-month cycle is compensated via Net Surplus Compensation (NSC). The surplus is credited and valued at wholesale energy prices, approx 2.8c/kWh. This is much lower than the retial paid to purchase energy from the utility, meaning that any net annual surplus solar energy production is essentially free EV charging (it has next to no residual value if un-used).</p>
+    </div>
+  </details>
+
+  <div class="panels">
+
+    <div class="panel panel-shared">
+      <h2><span class="dot dot-neutral"></span>Shared</h2>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Total miles driven per year. Affects fuel/energy costs and per-mile maintenance.">Annual mileage</span></span>
+        <div class="field-val"><input type="number" id="annualMilesNum" value="20000"><span class="affix">mi/yr</span></div></div>
+        <input type="range" id="annualMiles" min="5000" max="50000" step="1000" value="20000"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="How many years you plan to own the vehicle. Longer periods spread up-front costs but accumulate more fuel and maintenance.">Ownership period</span></span>
+        <div class="field-val"><input type="number" id="yearsNum" value="5"><span class="affix">yrs</span></div></div>
+        <input type="range" id="years" min="1" max="10" step="1" value="5"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Fraction of remaining value lost each year (declining balance). At 10%/yr, a $25k car retains ~59% of its value after 5 years. Higher = faster loss.">Depreciation rate</span></span>
+        <div class="field-val"><input type="number" id="depRateNum" value="10" step="0.5"><span class="affix">%/yr</span></div></div>
+        <input type="range" id="depRate" min="0" max="25" step="0.5" value="10"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Invest the difference between the purchase price of the two vehicles, grows at this rate of return. e.g. if the cheaper car saves $12k up front, that cash is assumed to earn this rate. 3–5% is a conservative real-return estimate.">Cost of capital</span></span>
+        <div class="field-val"><input type="number" id="capRateNum" value="3.5" step="0.5"><span class="affix">%/yr</span></div></div>
+        <input type="range" id="capRate" min="0" max="15" step="0.5" value="3.5"></div>
+      <label class="switch-field" for="upfrontToggle"><span class="sw-label">Include tax &amp; registration (10%)</span>
+        <input type="checkbox" id="upfrontToggle" checked><span class="switch-ui"></span></label>
+    </div>
+
+    <div class="panel panel-rav4">
+      <h2><span class="dot dot-gas"></span>RAV4</h2>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Out-of-pocket purchase price, before tax. Default reflects a 2016–2019 RAV4 in fair condition.">Purchase price</span></span>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="rav4PriceNum" value="12500" step="100"></div></div>
+        <input type="range" id="rav4Price" min="5000" max="30000" step="100" value="12500"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Miles per gallon (combined city/highway). A non-hybrid RAV4 gets ~28 mpg; the RAV4 Hybrid gets ~38 mpg.">Fuel economy</span></span>
+        <div class="field-val"><input type="number" id="rav4MpgNum" value="28"><span class="affix">mpg</span></div></div>
+        <input type="range" id="rav4Mpg" min="15" max="50" step="1" value="28"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Price per gallon at your local pump. California average has been $4.50–5.50. Higher = stronger case for EV.">Gas price</span></span>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="gasPriceNum" value="5.00" step="0.05"><span class="affix">/gal</span></div></div>
+        <input type="range" id="gasPrice" min="2" max="8" step="0.05" value="5.00"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="All maintenance costs per mile: oil changes, brakes, tires, etc. ~$0.08–0.12/mi is typical for a well-maintained ICE vehicle.">Maintenance</span></span>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="rav4MaintNum" value="0.10" step="0.01"><span class="affix">/mi</span></div></div>
+        <input type="range" id="rav4Maint" min="0" max="0.30" step="0.01" value="0.10"></div>
+    </div>
+
+    <div class="panel panel-modely">
+      <h2><span class="dot dot-ev"></span>Model Y</h2>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Out-of-pocket purchase price, before tax. Default reflects a 2021–2022 used Model Y Long Range.">Purchase price</span></span>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="modelYPriceNum" value="25000" step="100"></div></div>
+        <input type="range" id="modelYPrice" min="10000" max="60000" step="100" value="25000"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Energy consumed per mile. Model Y RWD ~0.25 kWh/mi; AWD Long Range ~0.27–0.30. Higher = more expensive to charge.">Efficiency</span></span>
+        <div class="field-val"><input type="number" id="modelYEffNum" value="0.28" step="0.01"><span class="affix">kWh/mi</span></div></div>
+        <input type="range" id="modelYEff" min="0.20" max="0.40" step="0.01" value="0.28"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Percentage of miles charged at home vs. at a Tesla Supercharger. Home charging draws from your solar surplus first, then the grid. Supercharging is more expensive per kWh.">Charged at home</span></span>
+        <div class="field-val"><input type="number" id="homeSplitNum" value="50"><span class="affix">%</span></div></div>
+        <input type="range" id="homeSplit" min="0" max="100" step="5" value="50"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Tesla's per-kWh rate at Superchargers. Varies by location; ~$0.48–0.58/kWh in California. Much higher than home rates but available everywhere.">Supercharging rate</span></span>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="scRateNum" value="0.55" step="0.01"><span class="affix">/kWh</span></div></div>
+        <input type="range" id="scRate" min="0.10" max="0.80" step="0.01" value="0.55"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="All maintenance per mile: tires, cabin air filter, occasional brake service. EVs skip oil changes and have regenerative braking that extends brake life. ~$0.04–0.08/mi is realistic.">Maintenance</span></span>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="modelYMaintNum" value="0.06" step="0.01"><span class="affix">/mi</span></div></div>
+        <input type="range" id="modelYMaint" min="0" max="0.30" step="0.01" value="0.06"></div>
+    </div>
+
+    <div class="panel panel-solar">
+      <h2><span class="dot dot-sun"></span>Solar &amp; Home Power</h2>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Solar energy produced beyond your home's consumption each year. This charges the EV for free first; any remaining surplus earns a grid-export credit. Set to 0 if you have no solar.">Annual surplus solar production</span></span>
+        <div class="field-val"><input type="number" id="solarSurplusNum" value="4000" step="100"><span class="affix">kWh/yr</span></div></div>
+        <input type="range" id="solarSurplus" min="0" max="10000" step="100" value="4000"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="What the utility pays per kWh of surplus solar energy consumption in excess of home energy usage and/or EV charging (net, end of year). Under PG&E NEM 3.0 this is very low (~$0.02–0.05/kWh), which is why using solar to charge the EV directly is far more valuable.">Unused (surplus) solar credit</span></span>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="solarCreditNum" value="0.028" step="0.001"><span class="affix">/kWh</span></div></div>
+        <input type="range" id="solarCredit" min="0" max="0.20" step="0.001" value="0.028"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="What you pay per kWh when pulling from the grid (e.g. at night or when solar falls short). PG&E E-ELEC rate is ~$0.35–0.45/kWh. This applies to home charging beyond what solar covers.">Home grid charging (non-solar, utility rate)</span></span>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="homeRateNum" value="0.37" step="0.01"><span class="affix">/kWh</span></div></div>
+        <input type="range" id="homeRate" min="0.05" max="0.70" step="0.01" value="0.37"></div>
+    </div>
+
+  </div>
+
+  <div class="reset-row"><button class="reset-btn" id="resetBtn" type="button">Reset to defaults</button></div>
+
+  <div class="results">
+
+    <div class="ledger">
+      <div class="ledger-head"><div class="ledger-name"><span class="dot dot-gas"></span>RAV4</div>
+        <div class="ledger-total"><span class="big" id="rav4TotalBig">$0</span><span class="peryr" id="rav4PerYr">$0 / yr</span></div></div>
+      <div class="bar-label">Gross costs</div>
+      <div class="bar-track"><div id="rav4BarWrap" style="display:flex;width:100%;">
+        <div class="bar-seg seg-upfront" id="rav4SegUpfront"></div>
+        <div class="bar-seg seg-dep" id="rav4SegDep"></div>
+        <div class="bar-seg seg-gas" id="rav4SegFuel"></div>
+        <div class="bar-seg seg-maint" id="rav4SegMaint"></div>
+      </div></div>
+      <div class="credit-track">
+        <div class="credit-seg" id="rav4CreditBar"></div>
+        <div class="invest-seg" id="rav4InvestBar"></div>
+      </div>
+      <div class="credit-caption">
+        <span>– Credits</span>
+        <span><span class="cc-solar" id="rav4CreditCap">$0</span> solar &nbsp;·&nbsp; <span class="cc-invest" id="rav4InvestCap">$0</span> invest</span>
+      </div>
+      <div class="legend">
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--upfront)"></span><span class="lk-text">Tax &amp; registration<small id="rav4UpfrontSub"></small></span></span><span class="lv" id="rav4UpfrontVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--dep)"></span><span class="lk-text">Depreciation<small id="rav4DepSub"></small></span></span><span class="lv" id="rav4DepVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--fuel)"></span><span class="lk-text">Gas<small id="rav4GasSub"></small></span></span><span class="lv" id="rav4FuelVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--maint)"></span><span class="lk-text">Maintenance<small id="rav4MaintSub"></small></span></span><span class="lv" id="rav4MaintVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--sun)"></span><span class="lk-text">Solar export credit<small id="rav4CreditSub"></small></span></span><span class="lv credit" id="rav4CreditVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--invest)"></span><span class="lk-text">Investment return<small id="rav4InvestSub"></small></span></span><span class="lv invest" id="rav4InvestVal">$0</span></div>
+        <div class="legend-divider"></div>
+        <div class="legend-row net"><span class="lk"><span class="lk-text">Net total</span></span><span class="lv" id="rav4NetVal">$0</span></div>
+      </div>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-head"><div class="ledger-name"><span class="dot dot-ev"></span>Model Y</div>
+        <div class="ledger-total"><span class="big" id="modelYTotalBig">$0</span><span class="peryr" id="modelYPerYr">$0 / yr</span></div></div>
+      <div class="bar-label">Gross costs</div>
+      <div class="bar-track"><div id="modelYBarWrap" style="display:flex;width:100%;">
+        <div class="bar-seg seg-upfront" id="modelYSegUpfront"></div>
+        <div class="bar-seg seg-dep" id="modelYSegDep"></div>
+        <div class="bar-seg seg-home" id="modelYSegHome"></div>
+        <div class="bar-seg seg-sc" id="modelYSegSc"></div>
+        <div class="bar-seg seg-maint" id="modelYSegMaint"></div>
+      </div></div>
+      <div class="credit-track">
+        <div class="credit-seg" id="modelYCreditBar"></div>
+        <div class="invest-seg" id="modelYInvestBar"></div>
+      </div>
+      <div class="credit-caption">
+        <span>– Credits</span>
+        <span><span class="cc-solar" id="modelYCreditCap">$0</span> solar &nbsp;·&nbsp; <span class="cc-invest" id="modelYInvestCap">$0</span> invest</span>
+      </div>
+      <div class="legend">
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--upfront)"></span><span class="lk-text">Tax &amp; registration<small id="modelYUpfrontSub"></small></span></span><span class="lv" id="modelYUpfrontVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--dep)"></span><span class="lk-text">Depreciation<small id="modelYDepSub"></small></span></span><span class="lv" id="modelYDepVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--fuel-home)"></span><span class="lk-text">Home charging<small id="modelYHomeSub"></small></span></span><span class="lv" id="modelYHomeVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--fuel-sc)"></span><span class="lk-text">Supercharging<small id="modelYScSub"></small></span></span><span class="lv" id="modelYScVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--maint)"></span><span class="lk-text">Maintenance<small id="modelYMaintSub"></small></span></span><span class="lv" id="modelYMaintVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--sun)"></span><span class="lk-text">Solar export credit<small id="modelYCreditSub"></small></span></span><span class="lv credit" id="modelYCreditVal">$0</span></div>
+        <div class="legend-row"><span class="lk"><span class="dot" style="background:var(--invest)"></span><span class="lk-text">Investment return<small id="modelYInvestSub"></small></span></span><span class="lv invest" id="modelYInvestVal">$0</span></div>
+        <div class="legend-divider"></div>
+        <div class="legend-row net"><span class="lk"><span class="lk-text">Net total</span></span><span class="lv" id="modelYNetVal">$0</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="verdict" id="verdict"><div class="vtext" id="verdictText">Calculating…</div><div class="vnum" id="verdictNum">$0</div></div>
+
+  <p class="section-label">Cost over time</p>
+
+  <div class="chart-card">
+    <div class="chart-title">Cumulative net cost, side by side</div>
+    <div class="chart-holder" id="lineChartHolder"></div>
+    <div class="chart-legend">
+      <span class="cl-item"><span class="cl-line" style="background:var(--rav4)"></span>RAV4</span>
+      <span class="cl-item"><span class="cl-line" style="background:var(--modely)"></span>Model Y</span>
+    </div>
+  </div>
+
+  <div class="charts-pair">
+    <div class="chart-card"><div class="chart-title"><span class="dot dot-gas"></span>RAV4 — cost build-up</div><div class="chart-holder" id="rav4AreaHolder"></div></div>
+    <div class="chart-card"><div class="chart-title"><span class="dot dot-ev"></span>Model Y — cost build-up</div><div class="chart-holder" id="modelYAreaHolder"></div></div>
+  </div>
+  <div class="chart-legend" style="margin-top:0;">
+    <span class="cl-item"><span class="dot" style="background:var(--upfront)"></span>Tax &amp; reg</span>
+    <span class="cl-item"><span class="dot" style="background:var(--dep)"></span>Depreciation</span>
+    <span class="cl-item"><span class="dot" style="background:var(--fuel)"></span>RAV4 fuel (net)</span>
+    <span class="cl-item"><span class="dot" style="background:var(--fuel-sc)"></span>Model Y energy (net)</span>
+    <span class="cl-item"><span class="dot" style="background:var(--maint)"></span>Maintenance</span>
+    <span class="cl-item"><span class="dot" style="background:var(--invest)"></span>Invest return (credit)</span>
+  </div>
+
+  <footer id="footerNote"></footer>
+
+</div>
+
+<script>
+  const ids = ['annualMiles','years','depRate','capRate','rav4Price','rav4Mpg','gasPrice','rav4Maint','modelYPrice','modelYEff','homeSplit','scRate','modelYMaint','solarSurplus','solarCredit','homeRate'];
+  const defaults = {annualMiles:20000,years:5,depRate:10,capRate:3.5,rav4Price:12500,rav4Mpg:28,gasPrice:5.00,rav4Maint:0.10,modelYPrice:25000,modelYEff:0.28,homeSplit:50,scRate:0.55,modelYMaint:0.06,solarSurplus:4000,solarCredit:0.028,homeRate:0.37};
+  const UPFRONT_RATE = 0.10;
+  const C = {rav4:'#c9785e',modelY:'#7fa9ba',fuel:'#d9893d',fuelHome:'#bf6f2f',fuelSc:'#efb56f',dep:'#8a90cf',invest:'#5b9e8a',sun:'#d9ba58',upfront:'#718296',maint:'#74976e',grid:'#23262f',ink:'#eee9e1',inkDim:'#8d93a1',inkFaint:'#5d6373'};
+
+  function val(id){ return parseFloat(document.getElementById(id).value) || 0; }
+  function set(id,t){ document.getElementById(id).textContent = t; }
+  function usd(n){ const r=Math.round(n); return (r<0?'-$':'$')+Math.abs(r).toLocaleString('en-US'); }
+  function num(n){ return Math.round(n).toLocaleString('en-US'); }
+  function fmtK(v){ if(Math.abs(v)>=1000){ const k=v/1000; return '$'+(Math.abs(k%1)<0.05?k.toFixed(0):k.toFixed(1))+'k'; } return '$'+Math.round(v); }
+
+  function syncPair(id){ const r=document.getElementById(id), n=document.getElementById(id+'Num');
+    r.addEventListener('input',()=>{n.value=r.value;recalc();}); n.addEventListener('input',()=>{r.value=n.value;recalc();}); }
+  ids.forEach(syncPair);
+  document.getElementById('upfrontToggle').addEventListener('change',recalc);
+
+  function niceTicks(maxVal,count){
+    if(maxVal<=0) return {ticks:[0],niceMax:1};
+    const raw=maxVal/count, mag=Math.pow(10,Math.floor(Math.log10(raw))), norm=raw/mag;
+    let step; if(norm<=1)step=1; else if(norm<=2)step=2; else if(norm<=2.5)step=2.5; else if(norm<=5)step=5; else step=10;
+    step*=mag; const niceMax=Math.ceil(maxVal/step)*step; const ticks=[];
+    for(let v=0;v<=niceMax+1e-6;v+=step) ticks.push(v);
+    return {ticks,niceMax};
+  }
+
+  // investDiff: the cash price gap (positive number). If this vehicle is cheaper,
+  // pass -investDiff so that investment return grows as a credit over time.
+  // If this vehicle is more expensive (or equal), pass 0.
+  function buildSeries(p){
+    const samples=[]; const steps=48; const dt=p.years/steps;
+    for(let i=0;i<=steps;i++){
+      const t=i*dt;
+      const dep=p.price*(1-Math.pow(1-p.depRate,t));
+      const energy=p.energyAnnual*t;
+      const maint=p.maintAnnual*t;
+      // investDiff < 0 for cheaper vehicle → invest credit grows (negative = lowers total)
+      const invest=p.investDiff*(Math.pow(1+p.capRate,t)-1);
+      const upfront=p.upfront;
+      samples.push({t,upfront,dep,energy,maint,invest,total:upfront+dep+energy+maint+invest});
+    }
+    return samples;
+  }
+
+  function makeLineChart(N,rav4S,myS,sharedMax){
+    const W=860,H=380,mL=64,mR=24,mT=20,mB=44,pW=W-mL-mR,pH=H-mT-mB;
+    const {ticks,niceMax}=niceTicks(sharedMax,5);
+    const xS=t=>mL+(N>0?t/N:0)*pW, yS=v=>(mT+pH)-(v/niceMax)*pH;
+    let s='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace">';
+    ticks.forEach(v=>{const y=yS(v); s+='<line x1="'+mL+'" y1="'+y+'" x2="'+(W-mR)+'" y2="'+y+'" stroke="'+C.grid+'" stroke-width="1"/>'; s+='<text x="'+(mL-10)+'" y="'+(y+4)+'" fill="'+C.inkDim+'" font-size="11" text-anchor="end">'+fmtK(v)+'</text>';});
+    for(let yr=0;yr<=N;yr++){const x=xS(yr); s+='<text x="'+x+'" y="'+(H-16)+'" fill="'+C.inkDim+'" font-size="11" text-anchor="middle">'+yr+'</text>';}
+    s+='<text x="'+(mL+pW/2)+'" y="'+(H-2)+'" fill="'+C.inkFaint+'" font-size="10" text-anchor="middle">YEAR</text>';
+    let cross=null;
+    for(let i=1;i<rav4S.length;i++){const d0=rav4S[i-1].total-myS[i-1].total,d1=rav4S[i].total-myS[i].total;
+      if((d0<0&&d1>=0)||(d0>0&&d1<=0)){const f=d0/(d0-d1);const t=rav4S[i-1].t+f*(rav4S[i].t-rav4S[i-1].t);const v=rav4S[i-1].total+f*(rav4S[i].total-rav4S[i-1].total);cross={t,v};break;}}
+    if(cross){const cx=xS(cross.t); s+='<line x1="'+cx+'" y1="'+mT+'" x2="'+cx+'" y2="'+(mT+pH)+'" stroke="'+C.inkFaint+'" stroke-width="1" stroke-dasharray="4 4"/>'; s+='<circle cx="'+cx+'" cy="'+yS(cross.v)+'" r="4" fill="'+C.ink+'"/>'; s+='<text x="'+cx+'" y="'+(mT-6)+'" fill="'+C.ink+'" font-size="11" text-anchor="middle">crosses ~yr '+cross.t.toFixed(1)+'</text>';}
+    const path=arr=>arr.map(p=>xS(p.t).toFixed(1)+','+yS(p.total).toFixed(1)).join(' ');
+    s+='<polyline points="'+path(rav4S)+'" fill="none" stroke="'+C.rav4+'" stroke-width="2.5" stroke-linejoin="round"/>';
+    s+='<polyline points="'+path(myS)+'" fill="none" stroke="'+C.modelY+'" stroke-width="2.5" stroke-linejoin="round"/>';
+    for(let yr=0;yr<=N;yr++){const ir=rav4S.find(p=>Math.abs(p.t-yr)<1e-6),im=myS.find(p=>Math.abs(p.t-yr)<1e-6);
+      if(ir) s+='<circle cx="'+xS(yr)+'" cy="'+yS(ir.total)+'" r="3" fill="'+C.rav4+'"/>';
+      if(im) s+='<circle cx="'+xS(yr)+'" cy="'+yS(im.total)+'" r="3" fill="'+C.modelY+'"/>';}
+    s+='</svg>'; return s;
+  }
+
+  function makeAreaChart(N,S,sharedMax,energyColor){
+    const W=420,H=300,mL=52,mR=14,mT=18,mB=34,pW=W-mL-mR,pH=H-mT-mB;
+    const {ticks,niceMax}=niceTicks(sharedMax,4);
+    const xS=t=>mL+(N>0?t/N:0)*pW, yS=v=>(mT+pH)-(v/niceMax)*pH;
+    let s='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace">';
+    ticks.forEach(v=>{const y=yS(v); s+='<line x1="'+mL+'" y1="'+y+'" x2="'+(W-mR)+'" y2="'+y+'" stroke="'+C.grid+'" stroke-width="1"/>'; s+='<text x="'+(mL-8)+'" y="'+(y+4)+'" fill="'+C.inkDim+'" font-size="10" text-anchor="end">'+fmtK(v)+'</text>';});
+    for(let yr=0;yr<=N;yr+=(N>6?2:1)){const x=xS(yr); s+='<text x="'+x+'" y="'+(H-14)+'" fill="'+C.inkDim+'" font-size="10" text-anchor="middle">'+yr+'</text>';}
+    // b5 = b4 + invest; invest is negative for cheaper vehicle (credit pulls total down)
+    const B=S.map(p=>{const b0=0,b1=p.upfront,b2=b1+p.dep,b3=b2+Math.max(0,p.energy),b4=b3+Math.max(0,p.maint),b5=b4+p.invest; return {t:p.t,b0,b1,b2,b3,b4,b5};});
+    function bandB(lowKey,highKey,fill,opacity){let up='',dn='';
+      for(let i=0;i<B.length;i++){up+=(i?' ':'')+xS(B[i].t).toFixed(1)+','+yS(B[i][highKey]).toFixed(1);}
+      for(let i=B.length-1;i>=0;i--){dn+=' '+xS(B[i].t).toFixed(1)+','+yS(B[i][lowKey]).toFixed(1);}
+      return '<polygon points="'+up+dn+'" fill="'+fill+'" fill-opacity="'+(opacity||0.88)+'"/>';}
+    s+=bandB('b0','b1',C.upfront);
+    s+=bandB('b1','b2',C.dep);
+    s+=bandB('b2','b3',energyColor);
+    s+=bandB('b3','b4',C.maint);
+    // invest band: when invest<0 (cheaper vehicle), b5<b4, band draws downward (credit)
+    const hasInvest=B[B.length-1].b5!==B[B.length-1].b4;
+    if(hasInvest) s+=bandB('b5','b4',C.invest,0.75);
+    let tl=''; for(let i=0;i<S.length;i++){tl+=(i?' ':'')+xS(S[i].t).toFixed(1)+','+yS(S[i].total).toFixed(1);}
+    s+='<polyline points="'+tl+'" fill="none" stroke="'+C.ink+'" stroke-width="1.5" stroke-opacity="0.6"/>';
+    s+='</svg>'; return s;
+  }
+
+  function recalc(){
+    const annualMiles=val('annualMiles'),years=val('years'),depRate=val('depRate')/100,capRate=val('capRate')/100;
+    const rav4Price=val('rav4Price'),rav4Mpg=Math.max(1,val('rav4Mpg')),gasPrice=val('gasPrice'),rav4Maint=val('rav4Maint');
+    const modelYPrice=val('modelYPrice'),modelYEff=val('modelYEff'),homeSplit=val('homeSplit')/100,scRate=val('scRate'),modelYMaint=val('modelYMaint');
+    const solarSurplus=val('solarSurplus'),solarCredit=val('solarCredit'),homeRate=val('homeRate');
+    const upfrontOn=document.getElementById('upfrontToggle').checked;
+
+    const rav4Upfront=upfrontOn?rav4Price*UPFRONT_RATE:0;
+    const modelYUpfront=upfrontOn?modelYPrice*UPFRONT_RATE:0;
+
+    const rav4Gallons=annualMiles/rav4Mpg;
+    const rav4GasAnnual=rav4Gallons*gasPrice;
+    const rav4CreditAnnual=solarSurplus*solarCredit;
+    const rav4EnergyAnnualNet=rav4GasAnnual-rav4CreditAnnual;
+    const rav4MaintAnnual=annualMiles*rav4Maint;
+    const rav4GasTotal=rav4GasAnnual*years, rav4CreditTotal=rav4CreditAnnual*years, rav4MaintTotal=rav4MaintAnnual*years;
+    const rav4DepTotal=rav4Price*(1-Math.pow(1-depRate,years)), rav4Residual=rav4Price*Math.pow(1-depRate,years);
+
+    const homeMiles=annualMiles*homeSplit, scMiles=annualMiles*(1-homeSplit);
+    const homeNeedKwh=homeMiles*modelYEff, scNeedKwh=scMiles*modelYEff;
+    const homeSolarKwh=Math.min(homeNeedKwh,solarSurplus), homeGridKwh=Math.max(0,homeNeedKwh-solarSurplus);
+    const homeCostAnnual=homeGridKwh*homeRate;
+    const leftoverSolarKwh=Math.max(0,solarSurplus-homeNeedKwh), myCreditAnnual=leftoverSolarKwh*solarCredit;
+    const scCostAnnual=scNeedKwh*scRate;
+    const myEnergyAnnualNet=homeCostAnnual+scCostAnnual-myCreditAnnual;
+    const modelYMaintAnnual=annualMiles*modelYMaint;
+    const homeCostTotal=homeCostAnnual*years, scCostTotal=scCostAnnual*years, myCreditTotal=myCreditAnnual*years, modelYMaintTotal=modelYMaintAnnual*years;
+    const modelYDepTotal=modelYPrice*(1-Math.pow(1-depRate,years)), modelYResidual=modelYPrice*Math.pow(1-depRate,years);
+
+    // Investment return: credited to the CHEAPER vehicle (buying cheap + investing the difference)
+    const rav4Cash=rav4Price+rav4Upfront, modelYCash=modelYPrice+modelYUpfront;
+    const capitalDiff=Math.abs(modelYCash-rav4Cash);
+    const capFactorTotal=Math.pow(1+capRate,years)-1;
+    const investReturn=capitalDiff*capFactorTotal;
+    let rav4InvestCredit=0, modelYInvestCredit=0;
+    if(rav4Cash<modelYCash){ rav4InvestCredit=investReturn; }
+    else if(modelYCash<rav4Cash){ modelYInvestCredit=investReturn; }
+
+    // Gross = operational costs only (no capital charge); Net = gross - solar - invest credit
+    const rav4Gross=rav4Upfront+rav4DepTotal+rav4GasTotal+rav4MaintTotal;
+    const rav4Net=rav4Gross-rav4CreditTotal-rav4InvestCredit;
+    const modelYGross=modelYUpfront+modelYDepTotal+homeCostTotal+scCostTotal+modelYMaintTotal;
+    const modelYNet=modelYGross-myCreditTotal-modelYInvestCredit;
+
+    set('rav4TotalBig',usd(rav4Net)); set('rav4PerYr',usd(rav4Net/years)+' / yr');
+    set('modelYTotalBig',usd(modelYNet)); set('modelYPerYr',usd(modelYNet/years)+' / yr');
+    document.getElementById('heroEyebrow').textContent=years+'-Year Total Cost of Ownership · Live Dashboard';
+
+    set('rav4UpfrontVal',upfrontOn?usd(rav4Upfront):'$0'); set('rav4UpfrontSub',upfrontOn?'10% of '+usd(rav4Price)+' · one-time':'excluded');
+    set('rav4DepVal',usd(rav4DepTotal)); set('rav4DepSub',(depRate*100).toFixed(1)+'%/yr declining · residual '+usd(rav4Residual));
+    set('rav4FuelVal',usd(rav4GasTotal)); set('rav4GasSub',num(rav4Gallons)+' gal/yr × '+usd(gasPrice)+' → '+usd(rav4GasAnnual)+'/yr');
+    set('rav4MaintVal',usd(rav4MaintTotal)); set('rav4MaintSub',num(annualMiles)+' mi/yr × $'+rav4Maint.toFixed(2)+' → '+usd(rav4MaintAnnual)+'/yr');
+    set('rav4CreditVal','–'+usd(rav4CreditTotal)); set('rav4CreditSub',num(solarSurplus)+' kWh/yr × $'+solarCredit.toFixed(3)+' → '+usd(rav4CreditAnnual)+'/yr');
+    set('rav4InvestVal',rav4InvestCredit>0?'–'+usd(rav4InvestCredit):'—');
+    set('rav4InvestSub',rav4InvestCredit>0?usd(capitalDiff)+' invested @ '+(capRate*100).toFixed(1)+'%/yr for '+years+' yrs':'more expensive — no return');
+    set('rav4CreditCap','–'+usd(rav4CreditTotal)); set('rav4InvestCap',rav4InvestCredit>0?'–'+usd(rav4InvestCredit):'$0');
+    set('rav4NetVal',usd(rav4Net));
+
+    set('modelYUpfrontVal',upfrontOn?usd(modelYUpfront):'$0'); set('modelYUpfrontSub',upfrontOn?'10% of '+usd(modelYPrice)+' · one-time':'excluded');
+    set('modelYDepVal',usd(modelYDepTotal)); set('modelYDepSub',(depRate*100).toFixed(1)+'%/yr declining · residual '+usd(modelYResidual));
+    set('modelYHomeVal',homeCostTotal>0?usd(homeCostTotal):'$0'); document.getElementById('modelYHomeVal').classList.toggle('zero',homeCostTotal<=0);
+    set('modelYHomeSub',homeGridKwh>0?num(homeNeedKwh)+' kWh/yr — '+num(homeSolarKwh)+' solar + '+num(homeGridKwh)+' grid × $'+homeRate.toFixed(2):num(homeNeedKwh)+' kWh/yr — fully solar-covered, $0');
+    set('modelYScVal',usd(scCostTotal)); set('modelYScSub',num(scNeedKwh)+' kWh/yr × $'+scRate.toFixed(2)+' → '+usd(scCostAnnual)+'/yr');
+    set('modelYMaintVal',usd(modelYMaintTotal)); set('modelYMaintSub',num(annualMiles)+' mi/yr × $'+modelYMaint.toFixed(2)+' → '+usd(modelYMaintAnnual)+'/yr');
+    set('modelYCreditVal','–'+usd(myCreditTotal)); set('modelYCreditSub',num(leftoverSolarKwh)+' kWh/yr leftover × $'+solarCredit.toFixed(3)+' → '+usd(myCreditAnnual)+'/yr');
+    set('modelYInvestVal',modelYInvestCredit>0?'–'+usd(modelYInvestCredit):'—');
+    set('modelYInvestSub',modelYInvestCredit>0?usd(capitalDiff)+' invested @ '+(capRate*100).toFixed(1)+'%/yr for '+years+' yrs':'more expensive — no return');
+    set('modelYCreditCap','–'+usd(myCreditTotal)); set('modelYInvestCap',modelYInvestCredit>0?'–'+usd(modelYInvestCredit):'$0');
+    set('modelYNetVal',usd(modelYNet));
+
+    const maxGross=Math.max(rav4Gross,modelYGross,1);
+    document.getElementById('rav4BarWrap').style.width=(rav4Gross/maxGross*100)+'%';
+    document.getElementById('modelYBarWrap').style.width=(modelYGross/maxGross*100)+'%';
+    const w=(id,v,base)=>{document.getElementById(id).style.width=(Math.max(0,v)/Math.max(base,1)*100)+'%';};
+    w('rav4SegUpfront',rav4Upfront,rav4Gross); w('rav4SegDep',rav4DepTotal,rav4Gross); w('rav4SegFuel',rav4GasTotal,rav4Gross); w('rav4SegMaint',rav4MaintTotal,rav4Gross);
+    w('modelYSegUpfront',modelYUpfront,modelYGross); w('modelYSegDep',modelYDepTotal,modelYGross); w('modelYSegHome',homeCostTotal,modelYGross); w('modelYSegSc',scCostTotal,modelYGross); w('modelYSegMaint',modelYMaintTotal,modelYGross);
+    // Credit bars: solar and invest return side by side, widths relative to maxGross
+    document.getElementById('rav4CreditBar').style.width=(rav4CreditTotal/maxGross*100)+'%';
+    document.getElementById('rav4InvestBar').style.width=(rav4InvestCredit/maxGross*100)+'%';
+    document.getElementById('modelYCreditBar').style.width=(myCreditTotal/maxGross*100)+'%';
+    document.getElementById('modelYInvestBar').style.width=(modelYInvestCredit/maxGross*100)+'%';
+
+    const diff=rav4Net-modelYNet;
+    const verdict=document.getElementById('verdict'),vt=document.getElementById('verdictText'),vn=document.getElementById('verdictNum');
+    if(Math.abs(diff)<1){verdict.style.borderColor='var(--panel-border)';vn.style.color='var(--ink)';vt.innerHTML='Dead even over <b>'+years+' years</b> at these settings.';vn.textContent=usd(0);}
+    else if(diff>0){verdict.style.borderColor='var(--modely-dim)';vn.style.color='var(--modely)';vt.innerHTML='<b>Model Y</b> wins over <b>'+years+' years</b> ('+usd(diff/years)+'/yr).';vn.textContent=usd(diff)+' saved';}
+    else {verdict.style.borderColor='var(--rav4-dim)';vn.style.color='var(--rav4)';vt.innerHTML='<b>RAV4</b> wins over <b>'+years+' years</b> ('+usd(-diff/years)+'/yr).';vn.textContent=usd(-diff)+' saved';}
+
+    // investDiff passed as negative for the cheaper vehicle (grows as credit over time)
+    const rav4InvestDiff = rav4Cash<modelYCash ? -capitalDiff : 0;
+    const modelYInvestDiff = modelYCash<rav4Cash ? -capitalDiff : 0;
+    const rav4S=buildSeries({years,price:rav4Price,depRate,energyAnnual:rav4EnergyAnnualNet,maintAnnual:rav4MaintAnnual,investDiff:rav4InvestDiff,capRate,upfront:rav4Upfront});
+    const myS=buildSeries({years,price:modelYPrice,depRate,energyAnnual:myEnergyAnnualNet,maintAnnual:modelYMaintAnnual,investDiff:modelYInvestDiff,capRate,upfront:modelYUpfront});
+    const lineMax=Math.max(rav4S[rav4S.length-1].total,myS[myS.length-1].total,1);
+    document.getElementById('lineChartHolder').innerHTML=makeLineChart(years,rav4S,myS,lineMax);
+    document.getElementById('rav4AreaHolder').innerHTML=makeAreaChart(years,rav4S,lineMax,C.fuel);
+    document.getElementById('modelYAreaHolder').innerHTML=makeAreaChart(years,myS,lineMax,C.fuelSc);
+
+    document.getElementById('footerNote').innerHTML=
+      'Residual values after '+years+' yrs at '+(depRate*100).toFixed(1)+'%/yr declining-balance: '+usd(rav4Residual)+' (RAV4) · '+usd(modelYResidual)+' (Model Y). '+
+      'Capital freed by the cheaper car: '+usd(capitalDiff)+' → '+usd(investReturn)+' invested at '+(capRate*100).toFixed(1)+'%/yr real.';
+  }
+
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    ids.forEach(id=>{document.getElementById(id).value=defaults[id];document.getElementById(id+'Num').value=defaults[id];});
+    document.getElementById('upfrontToggle').checked=true; recalc();
+  });
+
+  recalc();
+</script>
+</body>
+</html>

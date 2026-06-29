@@ -202,14 +202,14 @@
     <div class="panel panel-shared">
       <h2><span class="dot dot-neutral"></span>Shared</h2>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Total miles driven per year. Affects fuel/energy costs and per-mile maintenance.">Annual mileage</span></span>
-        <div class="field-val"><input type="number" id="annualMilesNum" value="25000"><span class="affix">mi/yr</span></div></div>
-        <input type="range" id="annualMiles" min="5000" max="50000" step="1000" value="25000"></div>
+        <div class="field-val"><input type="number" id="annualMilesNum"><span class="affix">mi/yr</span></div></div>
+        <input type="range" id="annualMiles" min="5000" max="50000" step="1000"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="How many years you plan to own the vehicle. Longer periods spread up-front costs but accumulate more fuel and maintenance.">Ownership period</span></span>
-        <div class="field-val"><input type="number" id="yearsNum" value="3"><span class="affix">yrs</span></div></div>
-        <input type="range" id="years" min="1" max="10" step="1" value="3"></div>
+        <div class="field-val"><input type="number" id="yearsNum"><span class="affix">yrs</span></div></div>
+        <input type="range" id="years" min="1" max="10" step="1"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Invest the difference between the purchase price of the two vehicles, grows at this rate of return. e.g. if the cheaper car saves $12k up front, that cash is assumed to earn this rate. 3–5% is a conservative real-return estimate.">Cost of capital</span></span>
-        <div class="field-val"><input type="number" id="capRateNum" value="3.5" step="0.5"><span class="affix">%/yr</span></div></div>
-        <input type="range" id="capRate" min="0" max="15" step="0.5" value="3.5"></div>
+        <div class="field-val"><input type="number" id="capRateNum" step="0.5"><span class="affix">%/yr</span></div></div>
+        <input type="range" id="capRate" min="0" max="15" step="0.5"></div>
       <label class="switch-field" for="upfrontToggle"><span class="sw-label">Include tax &amp; registration (10%)</span>
         <input type="checkbox" id="upfrontToggle" checked><span class="switch-ui"></span></label>
     </div>
@@ -217,61 +217,61 @@
     <div class="panel panel-rav4">
       <h2><span class="dot dot-gas"></span>RAV4</h2>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Out-of-pocket purchase price, before tax. Default reflects a 2016–2019 RAV4 in fair condition.">Purchase price</span></span>
-        <div class="field-val"><span class="affix">$</span><input type="number" id="rav4PriceNum" value="12500" step="100"></div></div>
-        <input type="range" id="rav4Price" min="5000" max="30000" step="100" value="12500"></div>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="rav4PriceNum" step="100"></div></div>
+        <input type="range" id="rav4Price" min="5000" max="30000" step="100"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Fraction of remaining value lost each year (declining balance). At 10%/yr, a $12.5k car retains ~59% of its value after 5 years.">Depreciation rate</span></span>
-        <div class="field-val"><input type="number" id="rav4DepRateNum" value="10" step="0.5"><span class="affix">%/yr</span></div></div>
-        <input type="range" id="rav4DepRate" min="0" max="25" step="0.5" value="10"></div>
+        <div class="field-val"><input type="number" id="rav4DepRateNum" step="0.5"><span class="affix">%/yr</span></div></div>
+        <input type="range" id="rav4DepRate" min="0" max="25" step="0.5"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Miles per gallon (combined city/highway). A non-hybrid RAV4 gets ~28 mpg; the RAV4 Hybrid gets ~38 mpg.">Fuel economy</span></span>
-        <div class="field-val"><input type="number" id="rav4MpgNum" value="28"><span class="affix">mpg</span></div></div>
-        <input type="range" id="rav4Mpg" min="15" max="50" step="1" value="28"></div>
+        <div class="field-val"><input type="number" id="rav4MpgNum"><span class="affix">mpg</span></div></div>
+        <input type="range" id="rav4Mpg" min="15" max="50" step="1"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Price per gallon at your local pump. California average has been $4.50–5.50. Higher = stronger case for EV.">Gas price</span></span>
-        <div class="field-val"><span class="affix">$</span><input type="number" id="gasPriceNum" value="5.00" step="0.05"><span class="affix">/gal</span></div></div>
-        <input type="range" id="gasPrice" min="2" max="8" step="0.05" value="5.00"></div>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="gasPriceNum" step="0.05"><span class="affix">/gal</span></div></div>
+        <input type="range" id="gasPrice" min="2" max="8" step="0.05"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="All maintenance costs per mile: oil changes, brakes, tires, etc. ~$0.08–0.12/mi is typical for a well-maintained ICE vehicle.">Maintenance</span></span>
-        <div class="field-val"><span class="affix">$</span><input type="number" id="rav4MaintNum" value="0.10" step="0.01"><span class="affix">/mi</span></div></div>
-        <input type="range" id="rav4Maint" min="0" max="0.30" step="0.01" value="0.10"></div>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="rav4MaintNum" step="0.01"><span class="affix">/mi</span></div></div>
+        <input type="range" id="rav4Maint" min="0" max="0.30" step="0.01"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Monthly auto insurance premium for this vehicle.">Insurance</span></span>
-        <div class="field-val"><span class="affix">$</span><input type="number" id="rav4InsuranceNum" value="80" step="1"><span class="affix">/mo</span></div></div>
-        <input type="range" id="rav4Insurance" min="0" max="300" step="5" value="80"></div>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="rav4InsuranceNum" step="1"><span class="affix">/mo</span></div></div>
+        <input type="range" id="rav4Insurance" min="0" max="300" step="5"></div>
     </div>
 
     <div class="panel panel-modely">
       <h2><span class="dot dot-ev"></span>Model Y</h2>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Out-of-pocket purchase price, before tax. Default reflects a 2021–2022 used Model Y Long Range.">Purchase price</span></span>
-        <div class="field-val"><span class="affix">$</span><input type="number" id="modelYPriceNum" value="20500" step="100"></div></div>
-        <input type="range" id="modelYPrice" min="10000" max="60000" step="100" value="20500"></div>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="modelYPriceNum" step="100"></div></div>
+        <input type="range" id="modelYPrice" min="10000" max="60000" step="100"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Fraction of remaining value lost each year (declining balance). At 10%/yr, a $25k car retains ~59% of its value after 5 years.">Depreciation rate</span></span>
-        <div class="field-val"><input type="number" id="modelYDepRateNum" value="15" step="0.5"><span class="affix">%/yr</span></div></div>
-        <input type="range" id="modelYDepRate" min="0" max="25" step="0.5" value="15"></div>
+        <div class="field-val"><input type="number" id="modelYDepRateNum" step="0.5"><span class="affix">%/yr</span></div></div>
+        <input type="range" id="modelYDepRate" min="0" max="25" step="0.5"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Miles driven per kWh. Model Y RWD ~3.8–4.0 mi/kWh; AWD Long Range ~3.3–3.7. Higher = more efficient (cheaper to charge).">Efficiency</span></span>
-        <div class="field-val"><input type="number" id="modelYEffNum" value="3.5" step="0.1"><span class="affix">mi/kWh</span></div></div>
-        <input type="range" id="modelYEff" min="2.5" max="5.0" step="0.1" value="3.5"></div>
+        <div class="field-val"><input type="number" id="modelYEffNum" step="0.1"><span class="affix">mi/kWh</span></div></div>
+        <input type="range" id="modelYEff" min="2.5" max="5.0" step="0.1"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="What you pay per kWh when pulling from the grid (e.g. at night or when solar falls short). PG&E E-ELEC rate is ~$0.35–0.45/kWh. This applies to home charging beyond what solar covers.">Grid charging</span></span>
-        <div class="field-val"><span class="affix">$</span><input type="number" id="homeRateNum" value="0.37" step="0.01"><span class="affix">/kWh</span></div></div>
-        <input type="range" id="homeRate" min="0.05" max="0.70" step="0.01" value="0.37"></div>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="homeRateNum" step="0.01"><span class="affix">/kWh</span></div></div>
+        <input type="range" id="homeRate" min="0.05" max="0.70" step="0.01"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="All maintenance per mile: tires, cabin air filter, occasional brake service. EVs skip oil changes and have regenerative braking that extends brake life. ~$0.04–0.08/mi is realistic.">Maintenance</span></span>
-        <div class="field-val"><span class="affix">$</span><input type="number" id="modelYMaintNum" value="0.06" step="0.01"><span class="affix">/mi</span></div></div>
-        <input type="range" id="modelYMaint" min="0" max="0.30" step="0.01" value="0.06"></div>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="modelYMaintNum" step="0.01"><span class="affix">/mi</span></div></div>
+        <input type="range" id="modelYMaint" min="0" max="0.30" step="0.01"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Monthly auto insurance premium for this vehicle.">Insurance</span></span>
-        <div class="field-val"><span class="affix">$</span><input type="number" id="modelYInsuranceNum" value="120" step="1"><span class="affix">/mo</span></div></div>
-        <input type="range" id="modelYInsurance" min="0" max="300" step="5" value="120"></div>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="modelYInsuranceNum" step="1"><span class="affix">/mo</span></div></div>
+        <input type="range" id="modelYInsurance" min="0" max="300" step="5"></div>
     </div>
 
     <div class="panel panel-solar">
       <h2><span class="dot dot-sun"></span>Charging &amp; Solar</h2>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Percentage of miles charged at home vs. at a Tesla Supercharger. Home charging draws from your solar surplus first, then the grid. Supercharging is more expensive per kWh.">Charged at home</span></span>
-        <div class="field-val"><input type="number" id="homeSplitNum" value="60"><span class="affix">%</span></div></div>
-        <input type="range" id="homeSplit" min="0" max="100" step="5" value="60"></div>
+        <div class="field-val"><input type="number" id="homeSplitNum"><span class="affix">%</span></div></div>
+        <input type="range" id="homeSplit" min="0" max="100" step="5"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Tesla's per-kWh rate at Superchargers. Varies by location; ~$0.48–0.58/kWh in California. Much higher than home rates but available everywhere.">Supercharging rate</span></span>
-        <div class="field-val"><span class="affix">$</span><input type="number" id="scRateNum" value="0.55" step="0.01"><span class="affix">/kWh</span></div></div>
-        <input type="range" id="scRate" min="0.10" max="0.80" step="0.01" value="0.55"></div>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="scRateNum" step="0.01"><span class="affix">/kWh</span></div></div>
+        <input type="range" id="scRate" min="0.10" max="0.80" step="0.01"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Solar energy produced beyond your home's consumption each year. This charges the EV for free first; any remaining surplus earns a grid-export credit. Set to 0 if you have no solar.">Annual surplus solar production</span></span>
-        <div class="field-val"><input type="number" id="solarSurplusNum" value="4000" step="100"><span class="affix">kWh/yr</span></div></div>
-        <input type="range" id="solarSurplus" min="0" max="10000" step="100" value="4000"></div>
+        <div class="field-val"><input type="number" id="solarSurplusNum" step="100"><span class="affix">kWh/yr</span></div></div>
+        <input type="range" id="solarSurplus" min="0" max="10000" step="100"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="What the utility pays per kWh of surplus solar energy consumption in excess of home energy usage and/or EV charging (net, end of year). Under PG&E NEM 3.0 this is very low (~$0.02–0.05/kWh), which is why using solar to charge the EV directly is far more valuable.">Unused (surplus) solar credit</span></span>
-        <div class="field-val"><span class="affix">$</span><input type="number" id="solarCreditNum" value="0.028" step="0.001"><span class="affix">/kWh</span></div></div>
-        <input type="range" id="solarCredit" min="0" max="0.20" step="0.001" value="0.028"></div>
+        <div class="field-val"><span class="affix">$</span><input type="number" id="solarCreditNum" step="0.001"><span class="affix">/kWh</span></div></div>
+        <input type="range" id="solarCredit" min="0" max="0.20" step="0.001"></div>
     </div>
 
   </div>
@@ -401,7 +401,7 @@
 
 <script>
   const ids = ['annualMiles','years','rav4DepRate','modelYDepRate','capRate','rav4Price','rav4Mpg','gasPrice','rav4Maint','rav4Insurance','modelYPrice','modelYEff','homeSplit','scRate','modelYMaint','modelYInsurance','solarSurplus','solarCredit','homeRate'];
-  const defaults = {annualMiles:25000,years:3,rav4DepRate:10,modelYDepRate:15,capRate:3.5,rav4Price:12500,rav4Mpg:28,gasPrice:5.00,rav4Maint:0.10,rav4Insurance:80,modelYPrice:20500,modelYEff:3.5,homeSplit:60,scRate:0.55,modelYMaint:0.06,modelYInsurance:120,solarSurplus:4000,solarCredit:0.028,homeRate:0.37};
+  const defaults = {annualMiles:25000,years:3,rav4DepRate:15,modelYDepRate:20,capRate:3.5,rav4Price:12500,rav4Mpg:28,gasPrice:5.00,rav4Maint:0.10,rav4Insurance:80,modelYPrice:20500,modelYEff:3.5,homeSplit:60,scRate:0.55,modelYMaint:0.06,modelYInsurance:120,solarSurplus:4000,solarCredit:0.028,homeRate:0.37};
   const UPFRONT_RATE = 0.10;
   const C = {rav4:'#c9785e',modelY:'#7fa9ba',fuel:'#EA580C',fuelSolar:'#FDBA74',fuelHome:'#FB923C',fuelSc:'#F97316',dep:'#DC2626',invest:'#059669',sun:'#EAB308',upfront:'#64748B',maint:'#7C3AED',insure:'#2563EB',grid:'#23262f',ink:'#eee9e1',inkDim:'#8d93a1',inkFaint:'#5d6373'};
 
@@ -410,6 +410,15 @@
   function usd(n){ const r=Math.round(n); return (r<0?'-$':'$')+Math.abs(r).toLocaleString('en-US'); }
   function num(n){ return Math.round(n).toLocaleString('en-US'); }
   function fmtK(v){ if(Math.abs(v)>=1000){ const k=v/1000; return '$'+(Math.abs(k%1)<0.05?k.toFixed(0):k.toFixed(1))+'k'; } return '$'+Math.round(v); }
+
+  function initializeInputs(){
+    ids.forEach(id=>{
+      const defaultValue=defaults[id];
+      document.getElementById(id).value=defaultValue;
+      document.getElementById(id+'Num').value=defaultValue;
+    });
+  }
+  initializeInputs();
 
   function syncPair(id){ const r=document.getElementById(id), n=document.getElementById(id+'Num');
     r.addEventListener('input',()=>{n.value=r.value;recalc();}); n.addEventListener('input',()=>{r.value=n.value;recalc();}); }

@@ -13,8 +13,8 @@
     --ink:#eee9e1; --ink-dim:#8d93a1; --ink-faint:#5d6373;
     --rav4:#c9785e; --rav4-dim:#5d4036;
     --modely:#7fa9ba; --modely-dim:#3c5663;
-    --fuel:#c96f15; --fuel-dim:#62452d; --fuel-solar:#f4b25a; --fuel-home:#df8a2c; --fuel-sc:#9a4e0e;
-    --dep:#6d5fcf; --sun:#e6b93f; --invest:#2fa377; --upfront:#6c7689; --maint:#cf5a83;
+    --fuel:#F97316; --fuel-dim:#62452d; --fuel-solar:#FDBA74; --fuel-home:#FB923C; --fuel-sc:#F97316;
+    --dep:#7C3AED; --sun:#EAB308; --invest:#059669; --upfront:#64748B; --maint:#2563EB;
     --radius:16px;
   }
   *{box-sizing:border-box;}
@@ -101,8 +101,8 @@
   .charge-total{font-weight:600;} .charge-total .ck{font-weight:600;} .charge-total .cc{color:var(--ink);}
 
   .credit-track{height:10px;border-radius:5px;background:#0d0f14;overflow:hidden;display:flex;margin-bottom:4px;}
-  .credit-seg{height:100%;background:repeating-linear-gradient(-45deg,var(--sun),var(--sun) 5px,#b88e22 5px,#b88e22 10px);transition:width .25s ease;}
-  .invest-seg{height:100%;background:repeating-linear-gradient(45deg,var(--invest),var(--invest) 5px,#1f7d59 5px,#1f7d59 10px);transition:width .25s ease;}
+  .credit-seg{height:100%;background:repeating-linear-gradient(-45deg,var(--sun),var(--sun) 5px,#CA8A04 5px,#CA8A04 10px);transition:width .25s ease;}
+  .invest-seg{height:100%;background:repeating-linear-gradient(45deg,var(--invest),var(--invest) 5px,#047857 5px,#047857 10px);transition:width .25s ease;}
   @media (prefers-reduced-motion:reduce){.credit-seg,.invest-seg{transition:none;}}
   .credit-caption{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-faint);margin:0 0 18px;display:flex;justify-content:space-between;gap:8px;}
   .credit-caption .cc-solar{color:var(--sun);}
@@ -187,9 +187,6 @@
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="How many years you plan to own the vehicle. Longer periods spread up-front costs but accumulate more fuel and maintenance.">Ownership period</span></span>
         <div class="field-val"><input type="number" id="yearsNum" value="5"><span class="affix">yrs</span></div></div>
         <input type="range" id="years" min="1" max="10" step="1" value="5"></div>
-      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Fraction of remaining value lost each year (declining balance). At 10%/yr, a $25k car retains ~59% of its value after 5 years. Higher = faster loss.">Depreciation rate</span></span>
-        <div class="field-val"><input type="number" id="depRateNum" value="10" step="0.5"><span class="affix">%/yr</span></div></div>
-        <input type="range" id="depRate" min="0" max="25" step="0.5" value="10"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Invest the difference between the purchase price of the two vehicles, grows at this rate of return. e.g. if the cheaper car saves $12k up front, that cash is assumed to earn this rate. 3–5% is a conservative real-return estimate.">Cost of capital</span></span>
         <div class="field-val"><input type="number" id="capRateNum" value="3.5" step="0.5"><span class="affix">%/yr</span></div></div>
         <input type="range" id="capRate" min="0" max="15" step="0.5" value="3.5"></div>
@@ -202,6 +199,9 @@
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Out-of-pocket purchase price, before tax. Default reflects a 2016–2019 RAV4 in fair condition.">Purchase price</span></span>
         <div class="field-val"><span class="affix">$</span><input type="number" id="rav4PriceNum" value="12500" step="100"></div></div>
         <input type="range" id="rav4Price" min="5000" max="30000" step="100" value="12500"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Fraction of remaining value lost each year (declining balance). At 10%/yr, a $12.5k car retains ~59% of its value after 5 years.">Depreciation rate</span></span>
+        <div class="field-val"><input type="number" id="rav4DepRateNum" value="10" step="0.5"><span class="affix">%/yr</span></div></div>
+        <input type="range" id="rav4DepRate" min="0" max="25" step="0.5" value="10"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Miles per gallon (combined city/highway). A non-hybrid RAV4 gets ~28 mpg; the RAV4 Hybrid gets ~38 mpg.">Fuel economy</span></span>
         <div class="field-val"><input type="number" id="rav4MpgNum" value="28"><span class="affix">mpg</span></div></div>
         <input type="range" id="rav4Mpg" min="15" max="50" step="1" value="28"></div>
@@ -218,6 +218,9 @@
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Out-of-pocket purchase price, before tax. Default reflects a 2021–2022 used Model Y Long Range.">Purchase price</span></span>
         <div class="field-val"><span class="affix">$</span><input type="number" id="modelYPriceNum" value="25000" step="100"></div></div>
         <input type="range" id="modelYPrice" min="10000" max="60000" step="100" value="25000"></div>
+      <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Fraction of remaining value lost each year (declining balance). At 10%/yr, a $25k car retains ~59% of its value after 5 years.">Depreciation rate</span></span>
+        <div class="field-val"><input type="number" id="modelYDepRateNum" value="10" step="0.5"><span class="affix">%/yr</span></div></div>
+        <input type="range" id="modelYDepRate" min="0" max="25" step="0.5" value="10"></div>
       <div class="field"><div class="field-head"><span class="label"><span class="tip" data-tip="Energy consumed per mile. Model Y RWD ~0.25 kWh/mi; AWD Long Range ~0.27–0.30. Higher = more expensive to charge.">Efficiency</span></span>
         <div class="field-val"><input type="number" id="modelYEffNum" value="0.28" step="0.01"><span class="affix">kWh/mi</span></div></div>
         <input type="range" id="modelYEff" min="0.20" max="0.40" step="0.01" value="0.28"></div>
@@ -366,10 +369,10 @@
 </div>
 
 <script>
-  const ids = ['annualMiles','years','depRate','capRate','rav4Price','rav4Mpg','gasPrice','rav4Maint','modelYPrice','modelYEff','homeSplit','scRate','modelYMaint','solarSurplus','solarCredit','homeRate'];
-  const defaults = {annualMiles:20000,years:5,depRate:10,capRate:3.5,rav4Price:12500,rav4Mpg:28,gasPrice:5.00,rav4Maint:0.10,modelYPrice:25000,modelYEff:0.28,homeSplit:50,scRate:0.55,modelYMaint:0.06,solarSurplus:4000,solarCredit:0.028,homeRate:0.37};
+  const ids = ['annualMiles','years','rav4DepRate','modelYDepRate','capRate','rav4Price','rav4Mpg','gasPrice','rav4Maint','modelYPrice','modelYEff','homeSplit','scRate','modelYMaint','solarSurplus','solarCredit','homeRate'];
+  const defaults = {annualMiles:20000,years:5,rav4DepRate:10,modelYDepRate:10,capRate:3.5,rav4Price:12500,rav4Mpg:28,gasPrice:5.00,rav4Maint:0.10,modelYPrice:25000,modelYEff:0.28,homeSplit:50,scRate:0.55,modelYMaint:0.06,solarSurplus:4000,solarCredit:0.028,homeRate:0.37};
   const UPFRONT_RATE = 0.10;
-  const C = {rav4:'#c9785e',modelY:'#7fa9ba',fuel:'#c96f15',fuelSolar:'#f4b25a',fuelHome:'#df8a2c',fuelSc:'#9a4e0e',dep:'#6d5fcf',invest:'#2fa377',sun:'#e6b93f',upfront:'#6c7689',maint:'#cf5a83',grid:'#23262f',ink:'#eee9e1',inkDim:'#8d93a1',inkFaint:'#5d6373'};
+  const C = {rav4:'#c9785e',modelY:'#7fa9ba',fuel:'#EA580C',fuelSolar:'#FDBA74',fuelHome:'#FB923C',fuelSc:'#F97316',dep:'#7C3AED',invest:'#059669',sun:'#EAB308',upfront:'#64748B',maint:'#2563EB',grid:'#23262f',ink:'#eee9e1',inkDim:'#8d93a1',inkFaint:'#5d6373'};
 
   function val(id){ return parseFloat(document.getElementById(id).value) || 0; }
   function set(id,t){ document.getElementById(id).textContent = t; }
@@ -456,7 +459,7 @@
   }
 
   function recalc(){
-    const annualMiles=val('annualMiles'),years=val('years'),depRate=val('depRate')/100,capRate=val('capRate')/100;
+    const annualMiles=val('annualMiles'),years=val('years'),rav4DepRate=val('rav4DepRate')/100,modelYDepRate=val('modelYDepRate')/100,capRate=val('capRate')/100;
     const rav4Price=val('rav4Price'),rav4Mpg=Math.max(1,val('rav4Mpg')),gasPrice=val('gasPrice'),rav4Maint=val('rav4Maint');
     const modelYPrice=val('modelYPrice'),modelYEff=val('modelYEff'),homeSplit=val('homeSplit')/100,scRate=val('scRate'),modelYMaint=val('modelYMaint');
     const solarSurplus=val('solarSurplus'),solarCredit=val('solarCredit'),homeRate=val('homeRate');
@@ -471,7 +474,7 @@
     const rav4EnergyAnnualNet=rav4GasAnnual-rav4CreditAnnual;
     const rav4MaintAnnual=annualMiles*rav4Maint;
     const rav4GasTotal=rav4GasAnnual*years, rav4CreditTotal=rav4CreditAnnual*years, rav4MaintTotal=rav4MaintAnnual*years;
-    const rav4DepTotal=rav4Price*(1-Math.pow(1-depRate,years)), rav4Residual=rav4Price*Math.pow(1-depRate,years);
+    const rav4DepTotal=rav4Price*(1-Math.pow(1-rav4DepRate,years)), rav4Residual=rav4Price*Math.pow(1-rav4DepRate,years);
 
     const homeMiles=annualMiles*homeSplit, scMiles=annualMiles*(1-homeSplit);
     const homeNeedKwh=homeMiles*modelYEff, scNeedKwh=scMiles*modelYEff;
@@ -482,7 +485,7 @@
     const myEnergyAnnualNet=homeCostAnnual+scCostAnnual-myCreditAnnual;
     const modelYMaintAnnual=annualMiles*modelYMaint;
     const homeCostTotal=homeCostAnnual*years, scCostTotal=scCostAnnual*years, myCreditTotal=myCreditAnnual*years, modelYMaintTotal=modelYMaintAnnual*years;
-    const modelYDepTotal=modelYPrice*(1-Math.pow(1-depRate,years)), modelYResidual=modelYPrice*Math.pow(1-depRate,years);
+    const modelYDepTotal=modelYPrice*(1-Math.pow(1-modelYDepRate,years)), modelYResidual=modelYPrice*Math.pow(1-modelYDepRate,years);
 
     // Investment return: credited to the CHEAPER vehicle (buying cheap + investing the difference)
     const rav4Cash=rav4Price+rav4Upfront, modelYCash=modelYPrice+modelYUpfront;
@@ -504,7 +507,7 @@
     document.getElementById('heroEyebrow').textContent=years+'-Year Total Cost of Ownership · Live Dashboard';
 
     set('rav4UpfrontVal',upfrontOn?usd(rav4Upfront):'$0'); set('rav4UpfrontSub',upfrontOn?'10% of '+usd(rav4Price)+' · one-time':'excluded');
-    set('rav4DepVal',usd(rav4DepTotal)); set('rav4DepSub',(depRate*100).toFixed(1)+'%/yr declining · residual '+usd(rav4Residual));
+    set('rav4DepVal',usd(rav4DepTotal)); set('rav4DepSub',(rav4DepRate*100).toFixed(1)+'%/yr declining · residual '+usd(rav4Residual));
     set('rav4FuelVal',usd(rav4GasTotal)); set('rav4GasSub',num(rav4Gallons)+' gal/yr × '+usd(gasPrice)+' → '+usd(rav4GasAnnual)+'/yr');
     set('rav4MaintVal',usd(rav4MaintTotal)); set('rav4MaintSub',num(annualMiles)+' mi/yr × $'+rav4Maint.toFixed(2)+' → '+usd(rav4MaintAnnual)+'/yr');
     set('rav4CreditVal','–'+usd(rav4CreditTotal)); set('rav4CreditSub',num(solarSurplus)+' kWh/yr × $'+solarCredit.toFixed(3)+' → '+usd(rav4CreditAnnual)+'/yr');
@@ -514,7 +517,7 @@
     set('rav4NetVal',usd(rav4Net));
 
     set('modelYUpfrontVal',upfrontOn?usd(modelYUpfront):'$0'); set('modelYUpfrontSub',upfrontOn?'10% of '+usd(modelYPrice)+' · one-time':'excluded');
-    set('modelYDepVal',usd(modelYDepTotal)); set('modelYDepSub',(depRate*100).toFixed(1)+'%/yr declining · residual '+usd(modelYResidual));
+    set('modelYDepVal',usd(modelYDepTotal)); set('modelYDepSub',(modelYDepRate*100).toFixed(1)+'%/yr declining · residual '+usd(modelYResidual));
     set('modelYHomeVal',homeCostTotal>0?usd(homeCostTotal):'$0'); document.getElementById('modelYHomeVal').classList.toggle('zero',homeCostTotal<=0);
     set('modelYHomeSub',homeGridKwh>0?num(homeNeedKwh)+' kWh/yr — '+num(homeSolarKwh)+' solar + '+num(homeGridKwh)+' grid × $'+homeRate.toFixed(2):num(homeNeedKwh)+' kWh/yr — fully solar-covered, $0');
     set('modelYScVal',usd(scCostTotal)); set('modelYScSub',num(scNeedKwh)+' kWh/yr × $'+scRate.toFixed(2)+' → '+usd(scCostAnnual)+'/yr');
@@ -559,15 +562,15 @@
     // investDiff passed as negative for the cheaper vehicle (grows as credit over time)
     const rav4InvestDiff = rav4Cash<modelYCash ? -capitalDiff : 0;
     const modelYInvestDiff = modelYCash<rav4Cash ? -capitalDiff : 0;
-    const rav4S=buildSeries({years,price:rav4Price,depRate,energyAnnual:rav4EnergyAnnualNet,maintAnnual:rav4MaintAnnual,investDiff:rav4InvestDiff,capRate,upfront:rav4Upfront});
-    const myS=buildSeries({years,price:modelYPrice,depRate,energyAnnual:myEnergyAnnualNet,maintAnnual:modelYMaintAnnual,investDiff:modelYInvestDiff,capRate,upfront:modelYUpfront});
+    const rav4S=buildSeries({years,price:rav4Price,depRate:rav4DepRate,energyAnnual:rav4EnergyAnnualNet,maintAnnual:rav4MaintAnnual,investDiff:rav4InvestDiff,capRate,upfront:rav4Upfront});
+    const myS=buildSeries({years,price:modelYPrice,depRate:modelYDepRate,energyAnnual:myEnergyAnnualNet,maintAnnual:modelYMaintAnnual,investDiff:modelYInvestDiff,capRate,upfront:modelYUpfront});
     const lineMax=Math.max(rav4S[rav4S.length-1].total,myS[myS.length-1].total,1);
     document.getElementById('lineChartHolder').innerHTML=makeLineChart(years,rav4S,myS,lineMax);
     document.getElementById('rav4AreaHolder').innerHTML=makeAreaChart(years,rav4S,lineMax,C.fuel);
     document.getElementById('modelYAreaHolder').innerHTML=makeAreaChart(years,myS,lineMax,C.fuelHome);
 
     document.getElementById('footerNote').innerHTML=
-      'Residual values after '+years+' yrs at '+(depRate*100).toFixed(1)+'%/yr declining-balance: '+usd(rav4Residual)+' (RAV4) · '+usd(modelYResidual)+' (Model Y). '+
+      'Residual values after '+years+' yrs (RAV4 '+(rav4DepRate*100).toFixed(1)+'%/yr, Model Y '+(modelYDepRate*100).toFixed(1)+'%/yr declining-balance): '+usd(rav4Residual)+' (RAV4) · '+usd(modelYResidual)+' (Model Y). '+
       'Capital freed by the cheaper car: '+usd(capitalDiff)+' → '+usd(investReturn)+' invested at '+(capRate*100).toFixed(1)+'%/yr real.';
   }
 
